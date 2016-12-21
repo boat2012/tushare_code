@@ -22,7 +22,7 @@ def is_break_high(stockID,days):
   
     start_day=start_day.strftime("%Y-%m-%d")  
     end_day=end_day.strftime("%Y-%m-%d")  
-    df=ts.get_h_data(stockID,start=start_day,end=end_day)  
+    df=ts.get_k_data(stockID,start=start_day,end=end_day)  
   
     period_high=df['high'].max()  
     #print period_high  
