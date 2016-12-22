@@ -46,7 +46,7 @@ data['nmc'] = data['nmc'] / 10000
 # In[17]:
 
 #每股公积金>=5
-res = data.reservedPerShare >= 2
+#res = data.reservedPerShare >= 2
 #流通股本<=2亿
 out = data.outstanding <= 2
 #每股收益>=5毛
@@ -57,7 +57,7 @@ mktcap = data.mktcap <= 100
 
 # In[18]:
 
-allcrit = res & out & eps & mktcap
+allcrit = out & mktcap
 selected = data[allcrit]
 
 
@@ -76,14 +76,14 @@ df.sort_values('trade')
 yg = ts.profit_data(top=300)
 #yg = ts.forecast_data(2016, 4)
 
-print yg
+print(len(yg))
 # In[25]:
 
 #ygdata=yg.sort('shares', ascending=False)
 ygdata=yg.sort_values('shares', ascending=False)
 
-print ygdata
-print "\n"
+print(len(ygdata))
+print("\n")
 
 
 # In[26]:
@@ -94,6 +94,7 @@ print "\n"
 # In[27]:
 
 ygdata = ygdata.set_index('code')
+print(len(ygdata))
 
 
 # In[28]:
@@ -107,6 +108,7 @@ ygs = ygs[['name_x', 'trade', 'pe', 'outstanding', 'totals', 'reservedPerShare',
 
 
 # In[35]:
-
+print(len(ygs))
+print(ygs)
 #ygs[(ygs.outstanding <= 2) & (ygs.reservedPerShare>=3) & (ygs.esp >= 0.5)].to_csv("gsz.csv")
-ygs[(ygs.outstanding <= 2) & (ygs.reservedPerShare>=3) & (ygs.esp >= 0.5)].to_csv("gsz.csv",encoding="utf8")
+ygs.to_csv("gsz.csv",encoding="utf8")
