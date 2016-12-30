@@ -3,10 +3,13 @@
 
 import urllib2
 from urllib import quote
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 def sendwx(title,desp):  # 标题是title ， 内容放在desp中
     url = u"http://sc.ftqq.com/SCU3876Tadcf6e52a9017dfde92f73604d477230582c3ffe9d618.send?text=%s&desp=%s"
-    req = urllib2.Request( url % (quote(title),quote(desp)))
+    req = urllib2.Request( url % (quote(title.encode("utf8")),quote(desp.encode("utf8"))))
     res_data = urllib2.urlopen(req)
     res=res_data.read()
     # print res
