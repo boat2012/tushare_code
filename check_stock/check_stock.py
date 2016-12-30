@@ -7,13 +7,16 @@ import tushare as ts
 import ConfigParser
 from sendwx import sendwx
 from cncurrency import cncurrency
+import logging
 import sys
 reload(sys)
 sys.setdefaultencoding("utf8")
 
 def main():
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="check_stock.log",level=logging.DEBUG)
     Config = ConfigParser.ConfigParser()
     Config.read("stock.ini")
+    logging.debug("开始获取股票价格")
     df = ts.get_today_all()
     for stockid in Config.sections():
         high = float(Config.get(stockid,"high"))
@@ -33,6 +36,7 @@ def main():
                 desp = u"你持有的股票%s已经达到%sxxxxxxx高于预期价格%sxxxxxxx请尽快%s" % (stockid,tradecn,highcn,action)
                 sendwx(title,desp)
                 activate=False
+                logging.debug(title+":"+desp)
             if low!=0 and trade <= low:
                 title = "股票%s提醒" % action
                 lowcn = cncurrency(low)
@@ -41,11 +45,13 @@ def main():
                 # print title,desp
                 sendwx(title,desp)
                 activate=False
+                logging.debug(title+":"+desp)
             if not activate:
                 cfgfile = open("stock.ini",'w')
                 Config.set(stockid,"activate",activate)
                 Config.write(cfgfile)
                 cfgfile.close()
+                logging.debug(stockid+"状态改变成失效")
 
 
 if __name__ == '__main__':
