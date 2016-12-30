@@ -25,7 +25,7 @@ def main():
         if activate:
             trade = df.loc[df["code"]==stockid].iloc[0]["trade"]
             #trade=25.44
-            # print trade
+            print trade
             if high!=0 and trade >= high:
                 title = u"股票%s提醒" % action
                 highcn = cncurrency(high)
