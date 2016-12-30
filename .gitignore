@@ -1,2 +1,9 @@
 *.csv
+<<<<<<< HEAD
 *.xls*
+=======
+*.txt
+*.pyc
+*.xls*
+*.log
+>>>>>>> b7687cd85c78bc017e9fa14eb161e21c477f47c9
