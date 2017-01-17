@@ -3,9 +3,10 @@ __author__ = 'rocky'
 #获取破指定天数内的新高 比如破60日新高  
 import tushare as ts  
 import datetime
+import time
 import os
 info=ts.get_stock_basics()  
-filename="1224.csv"
+filename=time.strftime("%m%d")+".csv"
 def loop_all_stocks():
     print u"总共有",len(info),u"支股票\n"
     i = 0
