@@ -1,4 +1,4 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding:utf-8 -*-
 # check the current sotck price whether touch the target high or low price
 
