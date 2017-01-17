@@ -1,6 +1,6 @@
-#!/usr/bin/python
+ï»¿#!/usr/bin/python
 # -*- coding:utf-8 -*-
-# º£¹ê
+# æµ·é¾Ÿ
 
 import tushare as ts
 import numpy as np
@@ -22,7 +22,7 @@ def qujian(data,T):
 def CalcUnit(perVAlue,ATR):
     return int((perValue/ATR)/100)*100
     
-def haigui(stockid,pri=False): # priÎªtrue ¾Í²»¹ÜÓĞÃ»ÓĞ·ûºÏÍ»ÆÆÌõ¼ş¾Í¶¼´òÓ¡³öÀ´
+def haigui(stockid,pri=False): # priä¸ºtrue å°±ä¸ç®¡æœ‰æ²¡æœ‰ç¬¦åˆçªç ´æ¡ä»¶å°±éƒ½æ‰“å°å‡ºæ¥
     logging.basicConfig(format="%(asctime)s -  %(message)s",filename="check_stock.log",level=logging.DEBUG)
     df=ts.get_k_data(stockid)
     if df.iloc[-1].date == last_date:
@@ -33,20 +33,20 @@ def haigui(stockid,pri=False): # priÎªtrue ¾Í²»¹ÜÓĞÃ»ÓĞ·ûºÏÍ»ÆÆÌõ¼ş¾Í¶¼´òÓ¡³öÀ´
         logging.debug(last_date)
         if pri:
             print last_date
-            print "¹ÉÆ±%sÄ¿Ç°¼ÛÎ»ÊÇ%.2f£¬ÂòÈëÉÏÏŞÊÇ%.2f£¬Âô³öÏÂÏŞÊÇ%.2f" % (stockid,price,high,low)
-            print "²¨¶¯·ù¶ÈÎª£º%.2f£¬ÂòÈëµÄ²ÖÎ»Îª£º%d¹É" % (atr,unit)
-            logging.debug("¹ÉÆ±%sÄ¿Ç°¼ÛÎ»ÊÇ%.2f£¬ÂòÈëÉÏÏŞÊÇ%.2f£¬Âô³öÏÂÏŞÊÇ%.2f" % (stockid,price,high,low))
-            logging.debug("²¨¶¯·ù¶ÈÎª£º%.2f£¬ÂòÈëµÄ²ÖÎ»Îª£º%d¹É" % (atr,unit))
+            print "è‚¡ç¥¨%sç›®å‰ä»·ä½æ˜¯%.2fï¼Œä¹°å…¥ä¸Šé™æ˜¯%.2fï¼Œå–å‡ºä¸‹é™æ˜¯%.2f" % (stockid,price,high,low)
+            print "æ³¢åŠ¨å¹…åº¦ä¸ºï¼š%.2fï¼Œä¹°å…¥çš„ä»“ä½ä¸ºï¼š%dè‚¡" % (atr,unit)
+            logging.debug("è‚¡ç¥¨%sç›®å‰ä»·ä½æ˜¯%.2fï¼Œä¹°å…¥ä¸Šé™æ˜¯%.2fï¼Œå–å‡ºä¸‹é™æ˜¯%.2f" % (stockid,price,high,low))
+            logging.debug("æ³¢åŠ¨å¹…åº¦ä¸ºï¼š%.2fï¼Œä¹°å…¥çš„ä»“ä½ä¸ºï¼š%dè‚¡" % (atr,unit))
         if price > high:
-            print "¹ÉÆ±%sÄ¿Ç°¼ÛÎ»ÊÇ%.2f£¬¿ÉÒÔÂòÈë£¬ÂòÈëÉÏÏŞÊÇ%.2f£¬Âô³öÏÂÏŞÊÇ%.2f" % (stockid,price,high,low)
-            print "²¨¶¯·ù¶ÈÎª£º%.2f£¬ÂòÈëµÄ²ÖÎ»Îª£º%d¹É" % (atr,unit)
-            logging.debug("¹ÉÆ±%sÄ¿Ç°¼ÛÎ»ÊÇ%.2f£¬¿ÉÒÔÂòÈë£¬ÂòÈëÉÏÏŞÊÇ%.2f£¬Âô³öÏÂÏŞÊÇ%.2f" % (stockid,price,high,low))
-            logging.debug("²¨¶¯·ù¶ÈÎª£º%.2f£¬ÂòÈëµÄ²ÖÎ»Îª£º%d¹É" % (atr,unit))
+            print "è‚¡ç¥¨%sç›®å‰ä»·ä½æ˜¯%.2fï¼Œå¯ä»¥ä¹°å…¥ï¼Œä¹°å…¥ä¸Šé™æ˜¯%.2fï¼Œå–å‡ºä¸‹é™æ˜¯%.2f" % (stockid,price,high,low)
+            print "æ³¢åŠ¨å¹…åº¦ä¸ºï¼š%.2fï¼Œä¹°å…¥çš„ä»“ä½ä¸ºï¼š%dè‚¡" % (atr,unit)
+            logging.debug("è‚¡ç¥¨%sç›®å‰ä»·ä½æ˜¯%.2fï¼Œå¯ä»¥ä¹°å…¥ï¼Œä¹°å…¥ä¸Šé™æ˜¯%.2fï¼Œå–å‡ºä¸‹é™æ˜¯%.2f" % (stockid,price,high,low))
+            logging.debug("æ³¢åŠ¨å¹…åº¦ä¸ºï¼š%.2fï¼Œä¹°å…¥çš„ä»“ä½ä¸ºï¼š%dè‚¡" % (atr,unit))
         if price < low:
-            print "¹ÉÆ±%sÄ¿Ç°¼ÛÎ»ÊÇ%.2f£¬Ó¦¸ÃÂô³ö£¬ÂòÈëÉÏÏŞÊÇ%.2f£¬Âô³öÏÂÏŞÊÇ%.2f" % (stockid,price,high,low)
-            print "²¨¶¯·ù¶ÈÎª£º%.2f£¬ÂòÈëµÄ²ÖÎ»Îª£º%d¹É" % (atr,unit)
-            logging.debug("¹ÉÆ±%sÄ¿Ç°¼ÛÎ»ÊÇ%.2f£¬Ó¦¸ÃÂô³ö£¬ÂòÈëÉÏÏŞÊÇ%.2f£¬Âô³öÏÂÏŞÊÇ%.2f" % (stockid,price,high,low))
-            logging.debug("²¨¶¯·ù¶ÈÎª£º%.2f£¬ÂòÈëµÄ²ÖÎ»Îª£º%d¹É" % (atr,unit))    
+            print "è‚¡ç¥¨%sç›®å‰ä»·ä½æ˜¯%.2fï¼Œåº”è¯¥å–å‡ºï¼Œä¹°å…¥ä¸Šé™æ˜¯%.2fï¼Œå–å‡ºä¸‹é™æ˜¯%.2f" % (stockid,price,high,low)
+            print "æ³¢åŠ¨å¹…åº¦ä¸ºï¼š%.2fï¼Œä¹°å…¥çš„ä»“ä½ä¸ºï¼š%dè‚¡" % (atr,unit)
+            logging.debug("è‚¡ç¥¨%sç›®å‰ä»·ä½æ˜¯%.2fï¼Œåº”è¯¥å–å‡ºï¼Œä¹°å…¥ä¸Šé™æ˜¯%.2fï¼Œå–å‡ºä¸‹é™æ˜¯%.2f" % (stockid,price,high,low))
+            logging.debug("æ³¢åŠ¨å¹…åº¦ä¸ºï¼š%.2fï¼Œä¹°å…¥çš„ä»“ä½ä¸ºï¼š%dè‚¡" % (atr,unit))    
     
 if __name__ == '__main__':
     #universe = ['000995', '000611','300029', '002801', '300519', '300268', '002109', '600603', '600306', '603909']
