@@ -31,6 +31,7 @@ def calc_hg(stockid): # 计算股票的上下限并返回
     return high,low
 
 if __name__ == '__main__':
+
     logging.basicConfig(format="%(asctime)s -  %(message)s",filename="check_stock.log",level=logging.DEBUG)
     Config = ConfigParser.ConfigParser()
     Config.read("stock.ini")
