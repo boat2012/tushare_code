@@ -1,4 +1,4 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding:utf-8 -*-
 # check the current sotck price whether touch the target high or low price
 
@@ -13,7 +13,7 @@ reload(sys)
 sys.setdefaultencoding("utf8")
 
 def main():
-    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="check_stock.log",level=logging.DEBUG)
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="/root/code/tushare_code/check_stock/check_stock.log",level=logging.DEBUG)
     Config = ConfigParser.ConfigParser()
     Config.read("stock.ini")
     logging.debug("开始获取股票价格")
@@ -25,10 +25,12 @@ def main():
         activate = Config.getboolean(stockid,"activate")
         #activate=True
         action = has and u"卖出" or u"买入"
+        logging.debug("activate:%s" % activate)
         if activate:
             trade = df.loc[df["code"]==stockid].iloc[0]["trade"]
             #trade=25.44
-            print trade
+            # print trade
+            logging.debug(u"股票%s现价：%s，预期高限%s, 预期低限%s" % (stockid,trade,high,low))
             if high!=0 and trade >= high:
                 title = u"股票%s提醒" % action
                 highcn = cncurrency(high)
