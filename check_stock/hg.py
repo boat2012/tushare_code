@@ -6,6 +6,7 @@ import tushare as ts
 import numpy as np
 import ConfigParser
 import logging
+BASE_PATH="/root/code/tushare_code/check_stock/"
 sz = ts.get_k_data("sh")
 last_date=sz.iloc[-1].date
 def CalcATR(data):
@@ -31,11 +32,10 @@ def calc_hg(stockid): # 计算股票的上下限并返回
     return high,low
 
 if __name__ == '__main__':
-
-    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="check_stock.log",level=logging.DEBUG)
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename=BASE_PATH+"check_stock.log",level=logging.DEBUG)
     Config = ConfigParser.ConfigParser()
-    Config.read("stock.ini")
-    cfgfile=open("stock.ini",'w')
+    Config.read(BASE_PATH+"stock.ini")
+    cfgfile=open(BASE_PATH+"stock.ini",'w')
     for stockid in Config.sections():
         high,low=calc_hg(stockid)
         if high != 0:
