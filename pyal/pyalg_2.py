@@ -21,7 +21,8 @@ import json
 import pyalg_utils,getdata
 from utils import dataFramefeed
 
-
+start_date="2015-01-01"
+end_date="2016-01-18"
 
 def turtle_test(load_type = 'dataFrame',dataString = 'pyalg'):
     filename = '%s/data/%s.csv'%(ct.BASE_PATH,"002419")
@@ -33,6 +34,8 @@ def turtle_test(load_type = 'dataFrame',dataString = 'pyalg'):
         #从dataFrame中加载，
         dat = pd.read_csv(filename,index_col=0,encoding='gbk')
         feed = dataFramefeed.Feed()
+        dat['volume']=dat['volume']*100
+        dat=dat[(dat.date>start_date) & (dat.date<end_date)]
         feed.addBarsFromDataFrame("thsc", dat)
     elif load_type == 'sql':
         #此处也是
