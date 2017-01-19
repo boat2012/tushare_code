@@ -31,7 +31,7 @@ def save_data():
         print ct.END
         try:
             if not os.path.exists('%s/data/%s.csv'%(ct.BASE_PATH,code)):
-                _data_ = ts.get_k_data(code,start=START,end=END)  #默认取3年，code为str，start无效的,start 和end若当天有数据则全都取
+                _data_ = ts.get_k_data(code,start=ct.START,end=ct.END)  #默认取3年，code为str，start无效的,start 和end若当天有数据则全都取
                 _data_['code']=_data_['code'].astype(str)
                 if _data_ is not None:
                     _data_.to_csv('%s/data/%s.csv'%(ct.BASE_PATH,code),encoding='utf8')
