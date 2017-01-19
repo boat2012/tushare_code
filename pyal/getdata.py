@@ -43,13 +43,17 @@ def save_data():
     _df_inuse.to_csv('%s/data/code_inuse.csv' % BASE_PATH,encoding='utf8')
 
 #从网络中更新数据,code 必须为str，dat中的为int
-def refresh_data(_start_='2016-12-01',_end_=ct.END):
+def refresh_data(_start_=ct.END,_end_=ct.END):
+    dat = pd.read_csv('%s/data/code.csv'% ct.BASE_PATH,dtype={'code': object},index_col=0,encoding='utf8')
+    # inuse = pd.read_csv('d:/data/code_inuse.csv',index_col=0,parse_dates=[0],encoding='gbk')
+    # new_inuse = []
+    # universe = ['002419']
     i=0
-    for code in universe:
+    for code in dat['code'].values:
         i+= 1
         print i,code
         try:
-            filename = '%s/data/%s.csv'%(BASE_PATH,code)
+            filename = '%s/data/%s.csv'%(ct.BASE_PATH,code)
             _data_ = ts.get_k_data(str(code),_start_,_end_)
             if _data_ is not None and _data_.size != 0:
                 if os.path.exists(filename):
@@ -69,5 +73,5 @@ def refresh_data(_start_='2016-12-01',_end_=ct.END):
 
 
 if __name__ == '__main__':
-    save_data()
-    #refresh_data()
+    #save_data()
+    refresh_data(_start_='2017-01-18')
