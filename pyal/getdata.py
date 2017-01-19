@@ -21,7 +21,7 @@ universe = ['002419']
 def save_data():
     dat = ts.get_industry_classified()
     dat = dat.drop_duplicates('code')
-    dat.to_csv('%s/data/code.csv'% BASE_PATH,encoding='utf8')
+    dat.to_csv('%s/data/code.csv'% ct.BASE_PATH,encoding='utf8')
     inuse = []
 
     i = 0
@@ -30,17 +30,17 @@ def save_data():
         print i,code
         print ct.END
         try:
-            if not os.path.exists('%s/data/%s.csv'%(BASE_PATH,code)):
+            if not os.path.exists('%s/data/%s.csv'%(ct.BASE_PATH,code)):
                 _data_ = ts.get_k_data(code,start=START,end=END)  #默认取3年，code为str，start无效的,start 和end若当天有数据则全都取
                 _data_['code']=_data_['code'].astype(str)
                 if _data_ is not None:
-                    _data_.to_csv('%s/data/%s.csv'%(BASE_PATH,code),encoding='utf8')
+                    _data_.to_csv('%s/data/%s.csv'%(ct.BASE_PATH,code),encoding='utf8')
                     if _data_.index[0] in ct._start_range and _data_.index[-1] in ct._end_range:                          #筛选一次代码，使用头尾都包含的代码
                         inuse.append(code)
         except IOError:
             pass    #不行的话还是continue
     _df_inuse = DataFrame(inuse,columns={'code'})
-    _df_inuse.to_csv('%s/data/code_inuse.csv' % BASE_PATH,encoding='utf8')
+    _df_inuse.to_csv('%s/data/code_inuse.csv' % ct.BASE_PATH,encoding='utf8')
 
 #从网络中更新数据,code 必须为str，dat中的为int
 def refresh_data(_start_=ct.END,_end_=ct.END):
