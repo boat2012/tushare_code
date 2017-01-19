@@ -5,7 +5,7 @@
 
 import sys
 
-import pylab as plt
+# import pylab as plt
 import pandas as pd
 import tushare as ts
 import numpy as np
