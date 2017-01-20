@@ -6,7 +6,7 @@ import datetime
 import time
 import os
 info=ts.get_stock_basics()  
-filename=time.strftime("%m%d")+".csv"
+filename=time.strftime("%m%d")+u"新高股票.csv"
 def loop_all_stocks():
     print u"总共有",len(info),u"支股票\n"
     i = 0
