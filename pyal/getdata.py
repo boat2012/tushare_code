@@ -13,7 +13,7 @@ import constant as ct
 import time,os
 from pandas import DataFrame
 from datetime import datetime
-
+import logging
 
 
 universe = ['002419']
@@ -73,5 +73,8 @@ def refresh_data(_start_=ct.END,_end_=ct.END):
 
 
 if __name__ == '__main__':
-    #save_data()
-    refresh_data(_start_='2017-01-18')
+    # save_data()
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename=ct.BASE_PATH+"/getdata.log",level=logging.DEBUG)
+    logging.debug("计算：每日收盘开始更新")
+    refresh_data()
+    logging.debug("计算：每日收盘更新完毕")
