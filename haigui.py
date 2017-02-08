@@ -30,23 +30,23 @@ def haigui(stockid,pri=False): # pri为true 就不管有没有符合突破条件
         price = df['close'].iloc[-1]
         atr = CalcATR(df)
         unit = int((3000/atr)/100)*100
-        logging.debug(last_date)
+        # logging.debug(last_date)
         if pri:
             print last_date
-            print "股票%s目前价位是%.2f，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low)
-            print "波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit)
-            logging.debug("股票%s目前价位是%.2f，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low))
-            logging.debug("波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit))
+            print u"股票%s目前价位是%.2f，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low)
+            print u"波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit)
+            logging.debug(u"股票%s目前价位是%.2f，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low))
+            logging.debug(u"波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit))
         if price > high:
-            print "股票%s目前价位是%.2f，可以买入，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low)
-            print "波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit)
-            logging.debug("股票%s目前价位是%.2f，可以买入，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low))
-            logging.debug("波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit))
+            print u"股票%s目前价位是%.2f，可以买入，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low)
+            print u"波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit)
+            logging.debug(u"股票%s目前价位是%.2f，可以买入，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low))
+            logging.debug(u"波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit))
         if price < low:
-            print "股票%s目前价位是%.2f，应该卖出，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low)
-            print "波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit)
-            logging.debug("股票%s目前价位是%.2f，应该卖出，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low))
-            logging.debug("波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit))    
+            print u"股票%s目前价位是%.2f，应该卖出，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low)
+            print u"波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit)
+            logging.debug(u"股票%s目前价位是%.2f，应该卖出，买入上限是%.2f，卖出下限是%.2f" % (stockid,price,high,low))
+            logging.debug(u"波动幅度为：%.2f，买入的仓位为：%d股" % (atr,unit))
     
 if __name__ == '__main__':
     #universe = ['000995', '000611','300029', '002801', '300519', '300268', '002109', '600603', '600306', '603909']
