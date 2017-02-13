@@ -7,7 +7,7 @@ import time
 import os
 import constant as ct
 
-filename=ct.BASE_PATH+u"/"+time.strftime("%m%d")+u"新高股票.csv"
+filename=ct.BASE_PATH+u"/"+time.strftime("%m%d")+u"newhigh.csv"
 def loop_all_stocks():
     dat = pd.read_csv('%s/data/code.csv'% ct.BASE_PATH,dtype={'code': object},index_col=0,encoding='utf8')
     print u"总共有",len(dat),u"支股票\n"
