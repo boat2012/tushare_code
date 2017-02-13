@@ -5,9 +5,11 @@ import pandas as pd
 import numpy as np
 import datetime
 import time
-import os
+import os,sys
 import constant as ct
+import logging
 
+logfilename=ct.BASE_PATH+"/getdata.log"
 filename=ct.BASE_PATH+u"/"+time.strftime("%m%d")+u"newhigh.csv"
 def loop_all_stocks():
     dat = pd.read_csv('%s/data/code.csv'% ct.BASE_PATH,dtype={'code': object},index_col=0,encoding='utf8')
@@ -26,6 +28,8 @@ def loop_all_stocks():
     info.to_csv(filename,encoding="utf8")
     # print info
     mailc = open(filename,"r").read().replace("\n","<BR>")
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename=logfilename,level=logging.DEBUG)
+    logging.debug(sys.argv[0]+u":今日共有%d支新高股票"%len(info))
     ct.send_mail(sub=u"今日新高股票",content=mailc)
 
 
