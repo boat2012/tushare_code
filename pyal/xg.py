@@ -2,6 +2,7 @@
 #获取破指定天数内的新高 比如破60日新高
 import tushare as ts
 import pandas as pd
+import numpy as np
 import datetime
 import time
 import os
@@ -11,15 +12,19 @@ filename=ct.BASE_PATH+u"/"+time.strftime("%m%d")+u"newhigh.csv"
 def loop_all_stocks():
     dat = pd.read_csv('%s/data/code.csv'% ct.BASE_PATH,dtype={'code': object},index_col=0,encoding='utf8')
     print u"总共有",len(dat),u"支股票\n"
+    info=pd.DataFrame()
     for EachStockID in dat['code'].values:
          if is_break_high(EachStockID,60):
-             info = dat[dat.code==EachStockID]
-             print u"第",info.index[0],u"支股票High price on",EachStockID,"\t",info.name.values[0]
+             info=info.append(dat[dat.code==EachStockID])
+             #print u"第",info.index[0],u"支股票High price on",EachStockID,"\t",info.name.values[0]
              # print dat[EachStockID]['name'].decode('utf-8')
-             if os.path.exists(filename):
-                 info.to_csv(filename, mode='a', encoding="utf8",header=None)
-             else:
-                 info.to_csv(filename,encoding="utf8")
+             #if os.path.exists(filename):
+             #    info.to_csv(filename, mode='a', encoding="utf8",header=None)
+             #else:
+             #    info.to_csv(filename,encoding="utf8")
+    info.index = np.arange(1,len(info)+1)
+    info.to_csv(filename,encoding="utf8")
+    # print info
     mailc = open(filename,"r").read().replace("\n","<BR>")
     ct.send_mail(sub=u"今日新高股票",content=mailc)
 
