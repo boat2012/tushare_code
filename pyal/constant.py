@@ -26,7 +26,7 @@ mail_user="fz.sea"    #用户名
 mail_pass="boat1.2012"   #口令
 mail_postfix="tom.com"  #发件箱的后缀
 ################################################
-def send_mail(to_list = mailto_list,sub,content):  # to_list：收件人；sub：主题；content：邮件内容
+def send_mail(sub,content,to_list = mailto_list):  # to_list：收件人；sub：主题；content：邮件内容
     me="ITV Daily Report"+"<"+mail_user+"@"+mail_postfix+">"   #这里的hello可以任意设置，收到信后，将按照设置显示
     msg = MIMEText(content,_subtype='html',_charset='utf-8')    #创建一个实例，这里设置为html格式邮件
     msg['Subject'] = sub    #设置主题
