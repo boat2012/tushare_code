@@ -7,21 +7,19 @@ import time
 import os
 import constant as ct
 
-filename=time.strftime("%m%d")+u"新高股票.csv"
+filename=ct.BASE_PATH+u"/"+time.strftime("%m%d")+u"新高股票.csv"
 def loop_all_stocks():
     dat = pd.read_csv('%s/data/code.csv'% ct.BASE_PATH,dtype={'code': object},index_col=0,encoding='utf8')
     print u"总共有",len(dat),u"支股票\n"
-    i = 0
     for EachStockID in dat['code'].values:
-         i = i + 1;
          if is_break_high(EachStockID,60):
-             print u"第",i,u"支股票High price on",
-             print EachStockID,"\n"
+             info = dat[dat.code==EachStockID]
+             print u"第",info.index[0],u"支股票High price on",EachStockID,"\t",info.name.values[0]
              # print dat[EachStockID]['name'].decode('utf-8')
-             # if os.path.exists(filename):
-             #    info.ix[EachStockID].to_frame(name=EachStockID).T.to_csv(filename, mode='a', encoding="utf8",header=None)
-             # else:
-             #    info.ix[EachStockID].to_frame(name=EachStockID).T.to_csv(filename,encoding="utf8")
+             if os.path.exists(filename):
+                 info.to_csv(filename, mode='a', encoding="utf8",header=None)
+             else:
+                 info.to_csv(filename,encoding="utf8")
 
 
 
