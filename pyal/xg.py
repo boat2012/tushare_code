@@ -33,7 +33,7 @@ def is_break_high(stockID,days):
 
     start_day=start_day.strftime("%Y-%m-%d")
     end_day=end_day.strftime("%Y-%m-%d")
-    filename = 'C:/Code/tushare_code/pyal/data/%s.csv'% stockID
+    filename = '%s/data/%s.csv'% (ct.BASE_PATH,stockID)
     df = pd.read_csv(filename,index_col=0,encoding='gbk')
     df_qujian = df[(df.date > start_day)&(df.date < end_day)]
     # df=ts.get_k_data(stockID,start=start_day,end=end_day)
