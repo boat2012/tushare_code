@@ -20,6 +20,8 @@ def loop_all_stocks():
                  info.to_csv(filename, mode='a', encoding="utf8",header=None)
              else:
                  info.to_csv(filename,encoding="utf8")
+    mailc = open(filename,"r").read()
+    ct.mailto_list(sub=u"今日新高股票",mailc)
 
 
 
@@ -51,3 +53,4 @@ def is_break_high(stockID,days):
 
 if __name__ == '__main__':
     loop_all_stocks()
+
