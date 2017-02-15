@@ -13,7 +13,7 @@ logfilename=ct.BASE_PATH+"/getdata.log"
 filename=ct.BASE_PATH+u"/"+time.strftime("%m%d")+u"newhigh.csv"
 def loop_all_stocks():
     dat = pd.read_csv('%s/data/code.csv'% ct.BASE_PATH,dtype={'code': object},index_col=0,encoding='utf8')
-    print u"总共有",len(dat),u"支股票\n"
+    # print u"总共有",len(dat),u"支股票\n"
     info=pd.DataFrame()
     for EachStockID in dat['code'].values:
          if is_break_high(EachStockID,60):
