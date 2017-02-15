@@ -28,7 +28,7 @@ def loop_all_stocks():
     info.to_csv(filename,encoding="utf8")
     # print info["c_name"].value_counts().to_string()
     # print info
-    mailc = (open(filename,"r").read()+info["c_name"].value_counts().to_string()).replace("\n","<BR>")
+    mailc = (open(filename,"r").read()+info["c_name"].value_counts().to_string().encode("utf-8")).replace("\n","<BR>")
     logging.basicConfig(format="%(asctime)s -  %(message)s",filename=logfilename,level=logging.DEBUG)
     logging.debug(sys.argv[0]+u":今日共有%d支新高股票"%len(info))
     ct.send_mail(sub=u"今日新高股票",content=mailc)
