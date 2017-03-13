@@ -1,6 +1,6 @@
 *.csv
 *.ipynb
-c_price.py
+pyal/c_price.py
 <<<<<<< HEAD
 *.xls*
 =======
