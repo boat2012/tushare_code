@@ -23,7 +23,7 @@ _RATE_FREE_ = 0.05
 mailto_list=["3223449@qq.com"]
 mail_host="smtp.tom.com"  #设置服务器
 mail_user="fz.sea"    #用户名
-mail_pass=""   #口令
+mail_pass="boat1.2012"   #口令
 mail_postfix="tom.com"  #发件箱的后缀
 ################################################
 def send_mail(sub,content,to_list = mailto_list):  # to_list：收件人；sub：主题；content：邮件内容
