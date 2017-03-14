@@ -23,6 +23,7 @@ def main():
         low = float(Config.get(stockid,"low"))
         has = Config.getboolean(stockid,"has")
         activate = Config.getboolean(stockid,"activate")
+        print stockid, activate
         #activate=True
         action = has and u"卖出" or u"买入"
         logging.debug("activate:%s" % activate)
@@ -35,7 +36,7 @@ def main():
                 title = u"股票%s提醒" % action
                 highcn = cncurrency(high)
                 tradecn = cncurrency(trade)
-                desp = u"你持有的股票%s已经达到%sxxxxxxx高于预期价格%sxxxxxxx请尽快%s" % (stockid,tradecn,highcn,action)
+                desp = u"你持有的股票%s已经达到%sxxxxxxx高于预期价格%sxxxxxxx请尽快买入" % (stockid,tradecn,highcn)
                 sendwx(title,desp)
                 activate=False
                 logging.debug(title+":"+desp)
@@ -43,7 +44,7 @@ def main():
                 title = "股票%s提醒" % action
                 lowcn = cncurrency(low)
                 tradecn = cncurrency(trade)
-                desp = "你持有的股票%s已经达到%sxxxxxxxxx低于预期价格%sxxxxxxxx请尽快%s" % (stockid,tradecn,lowcn,action)
+                desp = "你持有的股票%s已经达到%sxxxxxxxxx低于预期价格%sxxxxxxxx请尽快卖出" % (stockid,tradecn,lowcn)
                 # print title,desp
                 sendwx(title,desp)
                 activate=False
