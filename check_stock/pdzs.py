@@ -34,9 +34,9 @@ def main():
         print zs,zspool[zs]
         df=ts.get_k_data(zspool[zs],index=True)
         result,date,zsvalue=horl(df)
-        logging.debug("指数计算，指数%s,%s,日期：%s,%s" % (zspool[zs],result,date,zsvalue))
-        desp=desp+"指数计算，指数%s,%s,日期：%s,%s\n" % (zspool[zs],result,date,zsvalue)
-    sendwx(title,desp)
+        logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zspool[zs],result,date,zsvalue))
+        desp=desp+u"指数计算，指数%s，,%s，,日期：%s,%s\n" % (zspool[zs],result,date,zsvalue)
+    sendwx(u"指数计算",desp)
 
 if __name__ == '__main__':
     main()
