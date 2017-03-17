@@ -32,7 +32,7 @@ def main():
     desp=""
     logging.basicConfig(format="%(asctime)s -  %(message)s",filename="/root/code/tushare_code/check_stock/check_stock.log",level=logging.DEBUG)
     for zs in zspool:
-        print zs,zspool[zs]
+        # print zs,zspool[zs]
         df=ts.get_k_data(zspool[zs],index=True)
         result,date,zsvalue=horl(df)
         logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zs,result,date,zsvalue))
