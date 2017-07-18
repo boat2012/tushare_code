@@ -46,11 +46,11 @@ def main():
         df=ts.get_k_data(zspool[zs],index=True)
         result,date,zsvalue=horl(df)
         logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zs,result,date,zsvalue))
-        retmsg = retmsg + u"%s指数"%date + (u"%s一(%s一)%s一%s\n" % (zs,zspool[zs],result,zsvalue))
-		
+        msg = u"%s指数"%date + u"%s一(%s一)%s一%s\n" % (zs,zspool[zs],result,zsvalue)
+        conf.set("pdzs",zspool[zs],msg.encode("GBK"))
         if SENDWX :
             sendwx(u"%s指数"%date,u"%s一(%s一)%s一%s" % (zs,zspool[zs],result,zsvalue))
-    conf.set("pdzs","info",retmsg.encode("GBK"))
+#    conf.set("pdzs","info",retmsg.encode("GBK"))
     conf.write(open(cfgfile,"w"))
 	
 if __name__ == '__main__':
