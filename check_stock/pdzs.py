@@ -11,6 +11,8 @@ from sendwx import sendwx
 from cncurrency import cncurrency
 import logging
 import sys
+import ConfigParser
+
 sys.path.append(".")
 T = 20
 zspool={u"中小板指":"399005",
@@ -28,15 +30,28 @@ def horl(data): #判断最近是多还是空，反回多空，日期，指数值
         elif data.iloc[-i-1]['low'] <= low:
             return u"空",data.iloc[-i-1].date,data.iloc[-i-1]['low']
 
+			
+SENDWX = False  # 选项，是否用方糖公众号发微信信息
+datafile = "/root/code/tushare_code/check_stock/wxinfo.ini"
+cfgfile = "E:/code/tushare_code/check_stock/wxinfo.ini"
+
 def main():
     desp=""
-    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="/root/code/tushare_code/check_stock/check_stock.log",level=logging.DEBUG)
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="E:/code/tushare_code/check_stock/check_stock.log",level=logging.DEBUG)
+    conf = ConfigParser.ConfigParser()
+    conf.read(cfgfile)
+    retmsg = ""
     for zs in zspool:
         # print zs,zspool[zs]
         df=ts.get_k_data(zspool[zs],index=True)
         result,date,zsvalue=horl(df)
         logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zs,result,date,zsvalue))
-        sendwx(u"%s指数"%date,u"%s一(%s一)%s一%s" % (zs,zspool[zs],result,zsvalue))
-
+        retmsg = retmsg + u"%s指数"%date + (u"%s一(%s一)%s一%s\n" % (zs,zspool[zs],result,zsvalue))
+		
+        if SENDWX :
+            sendwx(u"%s指数"%date,u"%s一(%s一)%s一%s" % (zs,zspool[zs],result,zsvalue))
+    conf.set("pdzs","info",retmsg.encode("GBK"))
+    conf.write(open(cfgfile,"w"))
+	
 if __name__ == '__main__':
     main()
