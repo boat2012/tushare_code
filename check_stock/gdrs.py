@@ -44,7 +44,8 @@ gdrs_dtype={"SecurityCode": object,
 filename=u"C:/Code/tushare_code/check_stock/股东人数.csv"
 excelfile="C:/Code/tushare_code/check_stock/gdrs.xlsx"
 tempfile="C:/Code/tushare_code/check_stock/temp.xlsx"
-csvfile="C:/Code/tushare_code/check_stock/gdrs0719.csv"
+csvfile="/root/code/tushare_code/check_stock/gdrs.csv"
+# csvfile="/root/code/tushare_code/check_stock/gdrs.csv"
 
 def _read_gdrs_json(pageNum=1):
     URL="http://data.eastmoney.com/DataCenter_V3/gdhs/GetList.ashx?reportdate=&market=&changerate=="\
@@ -64,7 +65,7 @@ def _read_gdrs_json(pageNum=1):
         df['NoticeDate']=df['NoticeDate'].map(lambda x: x[0:10])
         df['PreviousEndDate']=df['PreviousEndDate'].map(lambda x: x[0:10])
         df["SecurityCode"]=df["SecurityCode"].map(lambda x:str(x).zfill(6))
-        # df.to_csv(filename,encoding='GBK')
+        # df.to_csv(filename,encoding='UTF8')
         return df
         # print df
     except:
@@ -74,15 +75,15 @@ def main():
     # URL = "http://data.eastmoney.com/gdhs/0.html"
     # URL="http://data.eastmoney.com/DataCenter_V3/gdhs/GetList.ashx?reportdate=&market=&changerate==&range==&pagesize=50&page=1&sortRule=-1&sortType=NoticeDate&js=var%20eITCKUoP&param=&rt=49980681"
 
-    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="gdrs.log",level=logging.DEBUG)
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="/root/code/tushare_code/check_stock/gdrs.log",level=logging.DEBUG)
     logging.debug("开始")
-    df = pd.DataFrame()
-    for pageNum in range(1,5):
+    df = pd.DataFrame(columns=GDRS_COLS)
+    for pageNum in range(1,66):
         print "parse page:", pageNum
         df=pd.concat([df,_read_gdrs_json(pageNum)])
         print "record readed:", len(df)
     if os.path.exists(csvfile):
-        olddata = pd.read_csv(csvfile,index_col=0,dtype=gdrs_dtype,encoding="GBK")
+        olddata = pd.read_csv(csvfile,index_col=0,dtype=gdrs_dtype,encoding="UTF8")
         df = pd.concat([df,olddata])
         df = df.drop_duplicates(subset=['SecurityCode','NoticeDate'],keep='last')
         print "total record:", len(df)
@@ -103,7 +104,8 @@ def main():
              ws.cell(row=r_idx, column=c_idx, value=value)
     wb.save(excelfile)'''
 
-    df.to_csv(csvfile,encoding="GBK")
+    logging.debug("total length: %s" % len(df))
+    df.to_csv(csvfile,encoding="utf8")
 
 
 if __name__ == '__main__':
