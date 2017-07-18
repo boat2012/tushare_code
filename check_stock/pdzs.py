@@ -11,12 +11,13 @@ from sendwx import sendwx
 from cncurrency import cncurrency
 import logging
 import sys
-
+sys.path.append(".")
 T = 20
-zspool={"中小板指":"399005",
-        "创业板指":"399006",
-        "上证50":"000016",
-        "中证500":"000905"}
+zspool={u"中小板指":"399005",
+        u"创业板指":"399006",
+        u"上证50":"000016",
+        u"批发零售":"399236",
+        u"中证500":"000905"}
 
 def horl(data): #判断最近是多还是空，反回多空，日期，指数值
     for i in range(len(data)):
@@ -31,12 +32,11 @@ def main():
     desp=""
     logging.basicConfig(format="%(asctime)s -  %(message)s",filename="/root/code/tushare_code/check_stock/check_stock.log",level=logging.DEBUG)
     for zs in zspool:
-        print zs,zspool[zs]
+        # print zs,zspool[zs]
         df=ts.get_k_data(zspool[zs],index=True)
         result,date,zsvalue=horl(df)
-        logging.debug("指数计算，指数%s,%s,日期：%s,%s" % (zspool[zs],result,date,zsvalue))
-        desp=desp+"指数计算，指数%s,%s,日期：%s,%s\n" % (zspool[zs],result,date,zsvalue)
-    sendwx(title,desp)
+        logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zs,result,date,zsvalue))
+        sendwx(u"%s指数"%date,u"%s一(%s一)%s一%s" % (zs,zspool[zs],result,zsvalue))
 
 if __name__ == '__main__':
     main()

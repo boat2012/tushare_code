@@ -25,13 +25,13 @@ def loop_all_stocks():
              #else:
              #    info.to_csv(filename,encoding="utf8")
     info.index = np.arange(1,len(info)+1)
-    info.to_csv(filename,encoding="utf8")
+    # info.to_csv(filename,encoding="utf8")  #sotre the new high stock to csv file
     # print info["c_name"].value_counts().to_string()
     # print info
     mailc = (open(filename,"r").read()+info["c_name"].value_counts().to_string().encode("utf-8")).replace("\n","<BR>")
     logging.basicConfig(format="%(asctime)s -  %(message)s",filename=logfilename,level=logging.DEBUG)
     logging.debug(sys.argv[0]+u":今日共有%d支新高股票"%len(info))
-    ct.send_mail(sub=u"今日新高股票",content=mailc)
+    ct.send_mail(sub=(u"今日新高股票%d支"%len(info)),content=mailc)
 
 
 
@@ -45,7 +45,7 @@ def is_break_high(stockID,days):
     end_day=end_day.strftime("%Y-%m-%d")
     filename = '%s/data/%s.csv'% (ct.BASE_PATH,stockID)
     df = pd.read_csv(filename,index_col=0,encoding='gbk')
-    df_qujian = df[(df.date > start_day)&(df.date < end_day)]
+    df_qujian = df[(df.date > start_day)&(df.date <= end_day)]
     # df=ts.get_k_data(stockID,start=start_day,end=end_day)
     if len(df_qujian) > 30 :   # 上市一个月以内的不考虑
         period_high=df_qujian['high'].max()
