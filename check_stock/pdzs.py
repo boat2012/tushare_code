@@ -32,12 +32,13 @@ def horl(data): #判断最近是多还是空，反回多空，日期，指数值
 
 			
 SENDWX = False  # 选项，是否用方糖公众号发微信信息
-datafile = "/root/code/tushare_code/check_stock/wxinfo.ini"
-cfgfile = "E:/code/tushare_code/check_stock/wxinfo.ini"
+linuxpath = "/root/code/tushare_code/check_stock/"
+winpath = "E:/code/tushare_code/check_stock/wxinfo.ini"
 
 def main():
     desp=""
-    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="E:/code/tushare_code/check_stock/check_stock.log",level=logging.DEBUG)
+    cfgfile = linuxpath + "wxinfo.ini"
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename=linuxpath + "pdzs.log",level=logging.DEBUG)
     conf = ConfigParser.ConfigParser()
     conf.read(cfgfile)
     retmsg = ""
