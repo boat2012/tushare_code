@@ -17,6 +17,7 @@ linuxpath = "/root/code/tushare_code/check_stock/"
 logpath = "/root/code/tushare_code/check_stock/"
 winpath = "C:/Code/tushare_code/check_stock/"
 csvfile=linuxpath + "gdrs0718.csv"
+cfgfile = "/root/www/webpy/wxinfo.ini"
 SENDWX = False  # 选项，是否用方糖公众号发微信信息
 
 gdrs_dtype={"SecurityCode": object,
