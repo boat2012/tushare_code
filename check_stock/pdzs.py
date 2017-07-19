@@ -13,6 +13,7 @@ import logging
 import sys
 import ConfigParser
 import codecs
+import datetime
 from ini_set import ini_set
 
 sys.path.append(".")
@@ -33,7 +34,7 @@ def horl(data): #判断最近是多还是空，反回多空，日期，指数值
             return u"空",data.iloc[-i-1].date,data.iloc[-i-1]['low']
 
 			
-SENDWX = False  # 选项，是否用方糖公众号发微信信息
+SENDWX = True  # 选项，是否用方糖公众号发微信信息
 linuxpath = "/root/www/webpy/" 
 logpath = "/root/code/tushare_code/check_stock/"
 winpath = "E:/code/tushare_code/check_stock/wxinfo.ini"
@@ -41,7 +42,7 @@ winpath = "E:/code/tushare_code/check_stock/wxinfo.ini"
 def main():
     desp=""
     cfgfile = linuxpath + "wxinfo.ini"
-    logging.basicConfig(format="%(asctime)s -  %(message)s",filename=logpath + "pdzs.log",level=logging.DEBUG)
+    logging.basicConfig(format="pdzs: %(asctime)s -  %(message)s",filename=logpath + "mylog.log",level=logging.DEBUG)
     conf = ConfigParser.ConfigParser()
     #with codecs.open(cfgfile,'r',encoding="utf-8") as f:
     #    conf.readfp(f)
@@ -50,11 +51,13 @@ def main():
     for zs in zspool:
         # print zs,zspool[zs]
         df=ts.get_k_data(zspool[zs],index=True)
-        print len(df)
+        # print len(df)
         result,date,zsvalue=horl(df)
         logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zs,result,date,zsvalue))
-        msg = u"%s指数"%date + u"%s一(%s一)%s一%s\n" % (zs,zspool[zs],result,zsvalue)
+        #msg = u"%s指数"%date + u"%s一(%s一)%s一%s\n" % (zs,zspool[zs],result,zsvalue)
+        msg = u"%s(%s)目前看%s，于%s到达%s\n" % (zs,zspool[zs],result,date,zsvalue)
         ini_set(cfgfile,"pdzs",zspool[zs],msg)
+        ini_set(cfgfile,"pdzs","date",str(datetime.date.today())[0:10])
         if SENDWX :
             sendwx(u"%s指数"%date,u"%s一(%s一)%s一%s" % (zs,zspool[zs],result,zsvalue))
 #    conf.set("pdzs","info",retmsg.encode("GBK"))

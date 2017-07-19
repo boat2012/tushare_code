@@ -75,7 +75,7 @@ def main():
     # URL = "http://data.eastmoney.com/gdhs/0.html"
     # URL="http://data.eastmoney.com/DataCenter_V3/gdhs/GetList.ashx?reportdate=&market=&changerate==&range==&pagesize=50&page=1&sortRule=-1&sortType=NoticeDate&js=var%20eITCKUoP&param=&rt=49980681"
 
-    logging.basicConfig(format="%(asctime)s -  %(message)s",filename="/root/code/tushare_code/check_stock/gdrs.log",level=logging.DEBUG)
+    logging.basicConfig(format="gdrs: %(asctime)s -  %(message)s",filename="/root/code/tushare_code/check_stock/mylog.log",level=logging.DEBUG)
     logging.debug("开始")
     df = pd.DataFrame(columns=GDRS_COLS)
     for pageNum in range(1,6):

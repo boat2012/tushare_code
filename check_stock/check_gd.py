@@ -12,11 +12,13 @@ import pandas as pd
 import numpy as np
 import datetime
 import ConfigParser
+import codecs
+from ini_set import ini_set
 
 linuxpath = "/root/code/tushare_code/check_stock/"
 logpath = "/root/code/tushare_code/check_stock/"
 winpath = "C:/Code/tushare_code/check_stock/"
-csvfile=linuxpath + "gdrs0718.csv"
+csvfile=linuxpath + "gdrs.csv"
 cfgfile = "/root/www/webpy/wxinfo.ini"
 SENDWX = False  # 选项，是否用方糖公众号发微信信息
 
@@ -44,13 +46,16 @@ def check_gd():
     with codecs.open(cfgfile,'r',encoding="utf-8") as f:
         conf.readfp(f)
 
-    today = str(datetime.date.today()-datetime.timedelta(days=1))[0:10] # 昨天的字符串，格式为 2017-07-10
+    today = str(datetime.date.today())[0:10] # 字符串，格式为 2017-07-10
     df= pd.read_csv(csvfile,index_col=0,dtype=gdrs_dtype,encoding="utf8")
     df_filter = df[(df.NoticeDate>=today) & (df.HolderNumChangeRate<-20)]
+    msg = ""
     for index,row in df_filter.iterrows():
-        conf.set("gdrs",row.SecurityCode,u"股票%s(%s)于%s公告，截止到%s为止，股东人数比%s减少了%.2f%%" % (row.SecurityName,row.SecurityCode,
-                                    row.NoticeDate,row.EndDate,row.PreviousEndDate,row.RangeChangeRate).encode("utf8"))
-    conf.write(open(cfgfile,"w"))
+        msg = u"股票%s(%s)于%s公告，截止到%s为止，股东人数比%s减少了%.2f%%\n" % (row.SecurityName,row.SecurityCode,
+               row.NoticeDate,row.EndDate,row.PreviousEndDate,row.HolderNumChangeRate)
+        # msg =  u"股票"
+    ini_set(cfgfile,"gdrs","todayinfo",msg)
+    ini_set(cfgfile,"gdrs","date",str(datetime.date.today())[0:10])
 
 
 if __name__ == '__main__':
