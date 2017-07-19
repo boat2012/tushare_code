@@ -78,7 +78,7 @@ def main():
     logging.basicConfig(format="%(asctime)s -  %(message)s",filename="/root/code/tushare_code/check_stock/gdrs.log",level=logging.DEBUG)
     logging.debug("开始")
     df = pd.DataFrame(columns=GDRS_COLS)
-    for pageNum in range(1,66):
+    for pageNum in range(1,6):
         print "parse page:", pageNum
         df=pd.concat([df,_read_gdrs_json(pageNum)])
         print "record readed:", len(df)
@@ -89,8 +89,8 @@ def main():
         print "total record:", len(df)
     df["SecurityCode"]=df["SecurityCode"].map(lambda x:str(x).zfill(6))
     df = df.fillna(0)
-    df["TotalCapitalisation"]=df["TotalCapitalisation"].astype(float)
-    df["CapitalStock"]=df["CapitalStock"].astype(float)
+    # df["TotalCapitalisation"]=df["TotalCapitalisation"].astype(float)
+    # df["CapitalStock"]=df["CapitalStock"].astype(float)
     df = df.sort_values("NoticeDate",ascending=False)
     df.index=range(1,len(df)+1)
     # df.fillna(0)

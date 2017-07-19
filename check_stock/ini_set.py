@@ -1,13 +1,15 @@
-import codecs
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 # 用于替换 ConfigParser中的写入函数，因为原来的不支持unicode
 
+import codecs
 import ConfigParser
 import types
 import sys
 
-def ini_set(sec,key,value):
+def ini_set(cfgfile,sec,key,value):
+    config = ConfigParser.ConfigParser()
+    config.readfp(codecs.open(cfgfile, "r", "utf-8"))
     try:
         config.readfp(codecs.open(cfgfile, "r", "utf-8"))
         if not config.has_section(sec):

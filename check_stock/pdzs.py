@@ -13,6 +13,7 @@ import logging
 import sys
 import ConfigParser
 import codecs
+from ini_set import ini_set
 
 sys.path.append(".")
 T = 20
@@ -41,22 +42,24 @@ def main():
     desp=""
     cfgfile = linuxpath + "wxinfo.ini"
     logging.basicConfig(format="%(asctime)s -  %(message)s",filename=logpath + "pdzs.log",level=logging.DEBUG)
-    conf = ConfigParser.SafeConfigParser()
-    with codecs.open(cfgfile,'r',encoding="utf-8") as f:
-        conf.readfp(f)
+    conf = ConfigParser.ConfigParser()
+    #with codecs.open(cfgfile,'r',encoding="utf-8") as f:
+    #    conf.readfp(f)
+    # conf.read(open(cfgfile,"r"))
     retmsg = ""
     for zs in zspool:
         # print zs,zspool[zs]
         df=ts.get_k_data(zspool[zs],index=True)
+        print len(df)
         result,date,zsvalue=horl(df)
         logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zs,result,date,zsvalue))
         msg = u"%s指数"%date + u"%s一(%s一)%s一%s\n" % (zs,zspool[zs],result,zsvalue)
-        conf.set("pdzs",zspool[zs],msg.encode("utf8"))
+        ini_set(cfgfile,"pdzs",zspool[zs],msg)
         if SENDWX :
             sendwx(u"%s指数"%date,u"%s一(%s一)%s一%s" % (zs,zspool[zs],result,zsvalue))
 #    conf.set("pdzs","info",retmsg.encode("GBK"))
-#    with codecs.open(cfgfile,'w',encoding="utf-8") as f:
-        conf.write(open(cfgfile,"w"))
+    #with codecs.open(cfgfile,'w',encoding="utf-8") as f:
+    #   conf.write(open(cfgfile,"w"))
 	
 if __name__ == '__main__':
     main()
