@@ -12,6 +12,7 @@ from cncurrency import cncurrency
 import logging
 import sys
 import ConfigParser
+import codecs
 
 sys.path.append(".")
 T = 20
@@ -32,15 +33,17 @@ def horl(data): #判断最近是多还是空，反回多空，日期，指数值
 
 			
 SENDWX = False  # 选项，是否用方糖公众号发微信信息
-linuxpath = "/root/code/tushare_code/check_stock/"
+linuxpath = "/root/www/webpy/" 
+logpath = "/root/code/tushare_code/check_stock/"
 winpath = "E:/code/tushare_code/check_stock/wxinfo.ini"
 
 def main():
     desp=""
     cfgfile = linuxpath + "wxinfo.ini"
-    logging.basicConfig(format="%(asctime)s -  %(message)s",filename=linuxpath + "pdzs.log",level=logging.DEBUG)
-    conf = ConfigParser.ConfigParser()
-    conf.read(cfgfile)
+    logging.basicConfig(format="%(asctime)s -  %(message)s",filename=logpath + "pdzs.log",level=logging.DEBUG)
+    conf = ConfigParser.SafeConfigParser()
+    with codecs.open(cfgfile,'r',encoding="utf-8") as f:
+        conf.readfp(f)
     retmsg = ""
     for zs in zspool:
         # print zs,zspool[zs]
@@ -48,11 +51,12 @@ def main():
         result,date,zsvalue=horl(df)
         logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zs,result,date,zsvalue))
         msg = u"%s指数"%date + u"%s一(%s一)%s一%s\n" % (zs,zspool[zs],result,zsvalue)
-        conf.set("pdzs",zspool[zs],msg.encode("GBK"))
+        conf.set("pdzs",zspool[zs],msg.encode("utf8"))
         if SENDWX :
             sendwx(u"%s指数"%date,u"%s一(%s一)%s一%s" % (zs,zspool[zs],result,zsvalue))
 #    conf.set("pdzs","info",retmsg.encode("GBK"))
-    conf.write(open(cfgfile,"w"))
+#    with codecs.open(cfgfile,'w',encoding="utf-8") as f:
+        conf.write(open(cfgfile,"w"))
 	
 if __name__ == '__main__':
     main()
