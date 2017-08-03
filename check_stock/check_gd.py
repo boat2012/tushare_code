@@ -42,16 +42,16 @@ gdrs_dtype={"SecurityCode": object,
 def check_gd():
     logging.basicConfig(format="gdrs: %(asctime)s -  %(message)s",filename=logpath + "pdzs.log",level=logging.DEBUG)
     logging.debug("开始")
-    conf = ConfigParser.SafeConfigParser()
-    with codecs.open(cfgfile,'r',encoding="utf-8") as f:
-        conf.readfp(f)
+    # conf = ConfigParser.SafeConfigParser()
+    # with codecs.open(cfgfile,'r',encoding="utf-8") as f:
+    #    conf.readfp(f)
 
-    today = str(datetime.date.today())[0:10] # 字符串，格式为 2017-07-10
+    today = str(datetime.date.today()-datetime.timedelta(days=2))[0:10]
     df= pd.read_csv(csvfile,index_col=0,dtype=gdrs_dtype,encoding="utf8")
     df_filter = df[(df.NoticeDate>=today) & (df.HolderNumChangeRate<-20)]
     msg = ""
     for index,row in df_filter.iterrows():
-        msg = u"股票%s(%s)于%s公告，截止到%s为止，股东人数比%s减少了%.2f%%\n" % (row.SecurityName,row.SecurityCode,
+        msg = msg + u"股票%s(%s)于%s公告，截止到%s为止，股东人数比%s减少了%.2f%%;" % (row.SecurityName,row.SecurityCode,
                row.NoticeDate,row.EndDate,row.PreviousEndDate,row.HolderNumChangeRate)
         # msg =  u"股票"
     ini_set(cfgfile,"gdrs","todayinfo",msg)

@@ -25,7 +25,7 @@ def loop_all_stocks():
              #else:
              #    info.to_csv(filename,encoding="utf8")
     info.index = np.arange(1,len(info)+1)
-    # info.to_csv(filename,encoding="utf8")  #sotre the new high stock to csv file
+    info.to_csv(filename,encoding="utf8")  #sotre the new high stock to csv file
     # print info["c_name"].value_counts().to_string()
     # print info
     mailc = (open(filename,"r").read()+info["c_name"].value_counts().to_string().encode("utf-8")).replace("\n","<BR>")

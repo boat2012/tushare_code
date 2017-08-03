@@ -57,6 +57,8 @@ def refresh_data(code,_start_=ct.END,_end_=ct.END):
     try:
         filename = '%s/data/%s.csv'%(ct.BASE_PATH,code)
         _data_ = ts.get_k_data(str(code),_start_,_end_)
+        print "start:",_start_,"end:",_end_, "code",str(code)
+        print "len:",len(_data_)
         if _data_ is not None and _data_.size != 0:
             if os.path.exists(filename):
                 olddata = pd.read_csv(filename,index_col=0,encoding='utf8')
