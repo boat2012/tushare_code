@@ -44,8 +44,9 @@ gdrs_dtype={"SecurityCode": object,
 filename=u"C:/Code/tushare_code/check_stock/股东人数.csv"
 excelfile="C:/Code/tushare_code/check_stock/gdrs.xlsx"
 tempfile="C:/Code/tushare_code/check_stock/temp.xlsx"
-csvfile="/root/code/tushare_code/check_stock/gdrs.csv"
-# csvfile="/root/code/tushare_code/check_stock/gdrs.csv"
+csvfile_r="/root/code/tushare_code/check_stock/gdrs_r.csv"
+csvfile_o="/root/code/tushare_code/check_stock/gdrs.csv" # 保留有两条记录以上的股东人数
+# csvfile_r="/root/code/tushare_code/check_stock/gdrs.csv"
 
 def _read_gdrs_json(pageNum=1):
     URL="http://data.eastmoney.com/DataCenter_V3/gdhs/GetList.ashx?reportdate=&market=&changerate=="\
@@ -82,8 +83,8 @@ def main():
         print "parse page:", pageNum
         df=pd.concat([df,_read_gdrs_json(pageNum)])
         print "record readed:", len(df)
-    if os.path.exists(csvfile):
-        olddata = pd.read_csv(csvfile,index_col=0,dtype=gdrs_dtype,encoding="UTF8")
+    if os.path.exists(csvfile_r):
+        olddata = pd.read_csv(csvfile_r,index_col=0,dtype=gdrs_dtype,encoding="UTF8")
         df = pd.concat([df,olddata])
         df = df.drop_duplicates(subset=['SecurityCode','NoticeDate'],keep='last')
         print "total record:", len(df)
@@ -105,7 +106,10 @@ def main():
     wb.save(excelfile)'''
 
     logging.debug("total length: %s" % len(df))
-    df.to_csv(csvfile,encoding="utf8")
+    df.to_csv(csvfile_r,encoding="utf8")
+    list_d = df[df.duplicated(subset=["SecurityCode"])].SecurityCode.tolist()
+    df_o = df[df.SecurityCode.isin(list_d)]
+    df_o.to_csv(csvfile_o,encoding="utf8")
 
 
 if __name__ == '__main__':
