@@ -66,7 +66,7 @@ def refresh_data(code,_start_=ct.END,_end_=ct.END):
                 _data_.groupby('date').apply(lambda x: x.ix[x.volume.idxmax()])
                 _data_=_data_.drop_duplicates(subset='date', keep="last")
                 _data_=_data_.sort_values("date")
-                _data_['code']=_data_['code'].astype(str)
+                _data_['code']=_data_['code'].map(lambda x:str(x).zfill(6))
                 _data_.to_csv(filename,encoding='utf8')
             else:
                 _data_.to_csv(filename,encoding='utf8')
