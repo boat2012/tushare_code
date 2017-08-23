@@ -107,7 +107,9 @@ def main():
 
     logging.debug("total length: %s" % len(df))
     df.to_csv(csvfile_r,encoding="utf8")
-    list_d = df[df.duplicated(subset=["SecurityCode"])].SecurityCode.tolist()
+    # list_d = df[df.duplicated(subset=["SecurityCode"])].SecurityCode.tolist()
+    mc = df["SecurityCode"].value_counts()
+    list_d = mc[mc>=2].index.tolist()
     df_o = df[df.SecurityCode.isin(list_d)]
     df_o.to_csv(csvfile_o,encoding="utf8")
 

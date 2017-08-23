@@ -51,8 +51,10 @@ def check_gd():
     df_filter = df[(df.NoticeDate>=today) & (df.HolderNumChangeRate<-20)]
     msg = ""
     for index,row in df_filter.iterrows():
-        msg = msg + u"股票%s(%s)于%s公告，截止到%s为止，股东人数比%s减少了%.2f%%;" % (row.SecurityName,row.SecurityCode,
-               row.NoticeDate,row.EndDate,row.PreviousEndDate,row.HolderNumChangeRate)
+         msg = msg + u"%s(%s)，%s股东比%s减少了%.2f%%;" % (row.SecurityName,row.SecurityCode,
+                 row.EndDate[5:],row.PreviousEndDate[5:],row.HolderNumChangeRate)
+        # msg = msg + u"股票%s(%s)于%s公告，截止到%s为止，股东人数比%s减少了%.2f%%;" % (row.SecurityName,row.SecurityCode,
+        #       row.NoticeDate,row.EndDate,row.PreviousEndDate,row.HolderNumChangeRate)
         # msg =  u"股票"
     ini_set(cfgfile,"gdrs","todayinfo",msg)
     ini_set(cfgfile,"gdrs","date",str(datetime.date.today())[0:10])
