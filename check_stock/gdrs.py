@@ -48,6 +48,14 @@ csvfile_r="/root/code/tushare_code/check_stock/gdrs_r.csv"
 csvfile_o="/root/code/tushare_code/check_stock/gdrs.csv" # 保留有两条记录以上的股东人数
 # csvfile_r="/root/code/tushare_code/check_stock/gdrs.csv"
 
+def isxg(stockid): # 根据存下来的交易数据的天数判断是否次新，交易天数大于200
+    sf = "/root/code/tushare_code/pyal/data/%s.csv" % stockid
+    df = pd.read_csv(sf,index_col=0,encoding='gbk')
+    if len(df)>200 :
+        return False
+    else:
+        return True
+
 def _read_gdrs_json(pageNum=1):
     URL="http://data.eastmoney.com/DataCenter_V3/gdhs/GetList.ashx?reportdate=&market=&changerate=="\
     "&range==&pagesize=50&page=%d"\
@@ -108,8 +116,12 @@ def main():
     logging.debug("total length: %s" % len(df))
     df.to_csv(csvfile_r,encoding="utf8")
     # list_d = df[df.duplicated(subset=["SecurityCode"])].SecurityCode.tolist()
+    print len(df)
+    df = df[df['PreviousEndDate']!="0"]
+    print "after",len(df)
     mc = df["SecurityCode"].value_counts()
-    list_d = mc[mc>=2].index.tolist()
+    mlist = mc[mc>=2].index.tolist()
+    list_d = [ ml for ml in mlist if not isxg(ml)]
     df_o = df[df.SecurityCode.isin(list_d)]
     df_o.to_csv(csvfile_o,encoding="utf8")
 
