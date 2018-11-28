@@ -56,10 +56,13 @@ def main():
         logging.debug(u"指数计算，指数%s,%s,日期：%s,%s" % (zs,result,date,zsvalue))
         #msg = u"%s指数"%date + u"%s一(%s一)%s一%s\n" % (zs,zspool[zs],result,zsvalue)
         msg = u"%s(%s)目前看%s，于%s到达%s\n" % (zs,zspool[zs],result,date,zsvalue)
+        conf.readfp(codecs.open(cfgfile,'r','utf-8'))
+        old = conf.get("pdzs",zspool[zs])
+        changed = result not in old #如果指数多变空或相反，才发微信提醒
         ini_set(cfgfile,"pdzs",zspool[zs],msg)
         ini_set(cfgfile,"pdzs","date",str(datetime.date.today())[0:10])
-        if SENDWX :
-            sendwx(u"%s指数"%date,u"%s一(%s一)%s一%s" % (zs,zspool[zs],result,zsvalue))
+        if SENDWX and changed:
+            sendwx(u"%s指数"%date,u"%s一(%s一)变为%s一%s" % (zs,zspool[zs],result,zsvalue))
 #    conf.set("pdzs","info",retmsg.encode("GBK"))
     #with codecs.open(cfgfile,'w',encoding="utf-8") as f:
     #   conf.write(open(cfgfile,"w"))
