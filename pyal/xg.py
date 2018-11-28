@@ -45,6 +45,7 @@ def is_break_high(stockID,days):
     end_day=end_day.strftime("%Y-%m-%d")
     filename = '%s/data/%s.csv'% (ct.BASE_PATH,stockID)
     df = pd.read_csv(filename,index_col=0,encoding='gbk')
+    df = df[df.volume != 0]
     df_qujian = df[(df.date > start_day)&(df.date <= end_day)]
     # df=ts.get_k_data(stockID,start=start_day,end=end_day)
     if len(df_qujian) > 30 :   # 上市一个月以内的不考虑
